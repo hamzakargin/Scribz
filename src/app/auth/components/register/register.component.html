@@ -37,6 +37,7 @@
             color="primary"
             class="full-width"
             type="submit"
+            [disabled]="isSubmitting$ | async"
           >
             Sign Up
           </button>

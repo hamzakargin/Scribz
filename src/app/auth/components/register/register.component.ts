@@ -5,21 +5,27 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 import { MatButtonModule } from '@angular/material/button';
-import { register } from '../../store/action';
+import { authActions } from '../../store/action';
 
 import {
   FormBuilder,
   Validators,
   FormGroup,
   ReactiveFormsModule,
+  ValidationErrors,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { RegisterRequestInterface } from '../../types/registerRequest.interface';
 import { RouterLink } from '@angular/router';
-import { selectIsSubmitting } from '../../store/reducer';
+import {
+  selectIsSubmitting,
+  selectValidationErrors,
+} from '../../store/reducer';
 
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
+import { BackendErrorsInterface } from '../../../shared/types/backendErrors.interface';
+import { BackendErrorMessagesComponent } from '../../../shared/components/backendErrosMessages/backend-error-messages/backend-error-messages.component';
 
 @Component({
   selector: 'app-register',
@@ -30,18 +36,25 @@ import { Observable } from 'rxjs';
     ReactiveFormsModule,
     RouterLink,
     CommonModule,
+    BackendErrorMessagesComponent,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent implements OnInit {
   form!: FormGroup;
-  isSubmitting$!: Observable<boolean>;
+  data$!: Observable<{
+    isSubmitting: boolean;
+    backendErrors: BackendErrorsInterface | null;
+  }>;
 
   constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit(): void {
-    this.isSubmitting$ = this.store.select(selectIsSubmitting);
+    this.data$ = combineLatest({
+      isSubmitting: this.store.select(selectIsSubmitting),
+      backendErrors: this.store.select(selectValidationErrors),
+    });
     this.form = this.fb.nonNullable.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -54,6 +67,6 @@ export class RegisterComponent implements OnInit {
     const request: RegisterRequestInterface = {
       user: this.form.getRawValue(),
     };
-    this.store.dispatch(register({ request }));
+    this.store.dispatch(authActions.register({ request }));
   }
 }

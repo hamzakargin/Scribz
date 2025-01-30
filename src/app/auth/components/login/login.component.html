@@ -1,1 +1,49 @@
-<p>login works!</p>
+<ng-container *ngIf="data$ | async as data">
+  <div class="auth-page">
+    <div class="container page">
+      <div class="row">
+        <div class="col-md-6 offset-md-3 col-xs-12">
+          <h1 class="text-center">Sign In</h1>
+          <p class="text-center">
+            <a routerLink="/register">Need an account?</a>
+          </p>
+          <app-backend-error-messages
+            *ngIf="data.backendErrors"
+            [backendErrors]="data.backendErrors"
+          ></app-backend-error-messages>
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Email</mat-label>
+              <input
+                matInput
+                type="email"
+                placeholder="Email"
+                formControlName="email"
+              />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Password</mat-label>
+              <input
+                matInput
+                type="password"
+                placeholder="Password"
+                formControlName="password"
+              />
+            </mat-form-field>
+
+            <button
+              mat-raised-button
+              color="primary"
+              class="full-width"
+              type="submit"
+              [disabled]="data.isSubmitting"
+            >
+              Sign Up
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

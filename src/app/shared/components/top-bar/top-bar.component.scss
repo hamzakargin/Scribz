@@ -1,0 +1,35 @@
+mat-toolbar {
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: rgb(15, 183, 116);
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .profile-button {
+    display: flex;
+    align-items: center;
+
+    .user-pic {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+  }
+}
+mat-toolbar {
+  background-color: #3f51b5;
+}

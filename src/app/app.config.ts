@@ -13,6 +13,7 @@ import { authFeatureKey, authReducer } from './auth/store/reducer';
 import { provideHttpClient } from '@angular/common/http';
 import { provideEffects } from '@ngrx/effects';
 import * as authEffects from '../app/auth/store/effects';
+import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -29,5 +30,6 @@ export const appConfig: ApplicationConfig = {
       traceLimit: 75,
     }),
     provideEffects(authEffects),
+    provideRouterStore(),
   ],
 };

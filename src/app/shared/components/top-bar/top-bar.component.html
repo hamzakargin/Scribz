@@ -1,0 +1,33 @@
+<ng-container *ngIf="data$ | async as data">
+  <mat-toolbar color="primary">
+    <div class="container">
+      <a mat-button routerLink="/" class="brand">Scribz</a>
+
+      <span class="spacer"></span>
+
+      <ng-container *ngIf="data.currentUser">
+        <button mat-button routerLink="/articles/new">
+          <mat-icon>edit</mat-icon> New Post
+        </button>
+
+        <button mat-button routerLink="/settings">
+          <mat-icon>settings</mat-icon> Settings
+        </button>
+
+        <button
+          mat-button
+          [routerLink]="['/profiles', data.currentUser.username]"
+          class="profile-button"
+        >
+          <img class="user-pic" [src]="data.currentUser.image" />
+          {{ data.currentUser.username }}
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="!data.currentUser">
+        <button mat-button routerLink="/login">Sign in</button>
+        <button mat-button routerLink="/register">Sign up</button>
+      </ng-container>
+    </div>
+  </mat-toolbar>
+</ng-container>

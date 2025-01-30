@@ -12,7 +12,6 @@ import {
   Validators,
   FormGroup,
   ReactiveFormsModule,
-  ValidationErrors,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { RegisterRequestInterface } from '../../types/registerRequest.interface';
@@ -25,7 +24,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { combineLatest, Observable } from 'rxjs';
 import { BackendErrorsInterface } from '../../../shared/types/backendErrors.interface';
-import { BackendErrorMessagesComponent } from '../../../shared/components/backendErrosMessages/backend-error-messages/backend-error-messages.component';
+import { BackendErrorMessagesComponent } from '../../../shared/components/backend-error-messages/backend-error-messages.component';
 
 @Component({
   selector: 'app-register',

@@ -2,6 +2,10 @@
   margin: 20px;
 }
 
+.banner-container {
+  margin-bottom: 20px;
+}
+
 .container-page {
   padding: 20px;
 }
@@ -12,13 +16,21 @@
 }
 
 .col-md-9 {
-  flex: 0 0 80%;
-  max-width: 80%;
+  flex: 0 0 75%;
+  max-width: 75%;
   padding: 10px;
 }
 
 .col-md-3 {
-  flex: 0 0 20%;
-  max-width: 20%;
+  flex: 0 0 25%;
+  max-width: 25%;
   padding: 10px;
+}
+
+.flow-togglers-card {
+  margin-bottom: 20px;
+}
+
+.popular-tags-card {
+  margin-bottom: 20px;
 }

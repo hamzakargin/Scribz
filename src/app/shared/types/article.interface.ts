@@ -1,3 +1,5 @@
+import { ProfileInterface } from './profile.interface';
+
 export interface ArticleInterface {
   body: string;
   createdAt: string;
@@ -7,5 +9,5 @@ export interface ArticleInterface {
   tagList: string[];
   title: string;
   updatedAt: string;
-  //todo: add author interface
+  author: ProfileInterface;
 }

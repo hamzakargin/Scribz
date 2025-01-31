@@ -6,10 +6,18 @@ import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { MatCardModule } from '@angular/material/card';
+import { BannerComponent } from '../../../shared/components/banner/banner.component';
+import { ErrorMessageComponent } from '../../../shared/components/error-message/error-message.component';
 
 @Component({
   selector: 'app-public-flow',
-  imports: [FlowComponent, CommonModule, MatToolbarModule, MatCardModule],
+  imports: [
+    FlowComponent,
+    CommonModule,
+    MatToolbarModule,
+    MatCardModule,
+    BannerComponent,
+  ],
   templateUrl: './public-flow.component.html',
   styleUrl: './public-flow.component.scss',
 })

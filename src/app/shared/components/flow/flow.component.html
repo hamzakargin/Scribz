@@ -1,1 +1,29 @@
-<p>flow works!</p>
+<ng-container *ngIf="data$ | async as data">
+  <app-loading *ngIf="data.isLoading"></app-loading>
+  <app-error-message *ngIf="data.error" [message]="data.error">
+  </app-error-message>
+
+  <div *ngIf="data.flow">
+    <div class="data-preview" *ngFor="let article of data.flow.articles">
+      <mat-card class="article-card">
+        <mat-card-header>
+          <mat-card-title>
+            <a [routerLink]="['/profiles', article.author.username]">
+              {{ article.author.username }}
+            </a>
+          </mat-card-title>
+          <mat-card-subtitle>{{ article.date }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <a [routerLink]="['/articles', article.slug]" class="preview-link">
+            <h1>{{ article.title }}</h1>
+            <p>{{ article.description }}</p>
+          </a>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>Add Favorites</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</ng-container>

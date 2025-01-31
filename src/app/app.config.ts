@@ -10,18 +10,26 @@ import { provideState, provideStore } from '@ngrx/store';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { authFeatureKey, authReducer } from './auth/store/reducer';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideEffects } from '@ngrx/effects';
 import * as authEffects from '../app/auth/store/effects';
-import { provideRouterStore, routerReducer } from '@ngrx/router-store';
+import * as flowEffects from '../app/shared/components/flow/store/effects';
+import { provideRouterStore } from '@ngrx/router-store';
+import { authInterceptor } from './shared/services/authInterceptor';
+import {
+  flowFeatureKey,
+  flowReducer,
+} from './shared/components/flow/store/reducers';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes),
     provideAnimationsAsync(),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideStore(),
     provideState(authFeatureKey, authReducer),
+    provideState(flowFeatureKey, flowReducer),
+    provideEffects(authEffects, flowEffects),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),
@@ -29,7 +37,7 @@ export const appConfig: ApplicationConfig = {
       trace: false,
       traceLimit: 75,
     }),
-    provideEffects(authEffects),
+
     provideRouterStore(),
   ],
 };

@@ -10,4 +10,9 @@ export const appRoutes: Route[] = [
     path: 'login',
     loadChildren: () => import('./auth/auth.routes').then((m) => m.loginRoutes),
   },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./publicFlow/publicFlow.routes').then((m) => m.routes),
+  },
 ];

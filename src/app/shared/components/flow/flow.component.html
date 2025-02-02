@@ -19,11 +19,18 @@
             <h1>{{ article.title }}</h1>
             <p>{{ article.description }}</p>
           </a>
+          <app-tag-list [tags]="article.tagList"></app-tag-list>
         </mat-card-content>
         <mat-card-actions>
           <button mat-button>Add Favorites</button>
         </mat-card-actions>
       </mat-card>
     </div>
+    <app-pagination
+      [total]="data.flow.articlesCount"
+      [limit]="limit"
+      [url]="baseUrl"
+      [currentPage]="currentPage"
+    ></app-pagination>
   </div>
 </ng-container>

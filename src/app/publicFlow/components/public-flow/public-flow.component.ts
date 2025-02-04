@@ -7,8 +7,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { MatCardModule } from '@angular/material/card';
 import { BannerComponent } from '../../../shared/components/banner/banner.component';
-import { ErrorMessageComponent } from '../../../shared/components/error-message/error-message.component';
+
 import { FrequentTagsComponent } from '../../../shared/components/frequentTags/frequentTags.component';
+import { FlowTogglerComponent } from '../../../shared/components/flow-toggler/flow-toggler.component';
 
 @Component({
   selector: 'app-public-flow',
@@ -19,6 +20,7 @@ import { FrequentTagsComponent } from '../../../shared/components/frequentTags/f
     MatCardModule,
     BannerComponent,
     FrequentTagsComponent,
+    FlowTogglerComponent,
   ],
   templateUrl: './public-flow.component.html',
   styleUrl: './public-flow.component.scss',

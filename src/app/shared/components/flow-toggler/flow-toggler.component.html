@@ -1,0 +1,25 @@
+<div class="flow-toggle">
+  <ul class="nav nav-pills outline-acvtive">
+    <li class="nav-item" *ngIf="currentUser$ | async">
+      <a routerLink="/flow" class="nav-link" routerLinkActive="active"
+        >Your flow</a
+      >
+    </li>
+    <li class="nav-item">
+      <a routerLink="/" class="nav-link" routerLinkActive="active"
+        >Public Flow</a
+      >
+    </li>
+    <li class="nav-item" *ngIf="tagName">
+      <a
+        [routerLink]="['/tags', tagName]"
+        class="nav-link"
+        routerLinkActive="active"
+      >
+        <i class="iot-pound">
+          {{ tagName }}
+        </i></a
+      >
+    </li>
+  </ul>
+</div>

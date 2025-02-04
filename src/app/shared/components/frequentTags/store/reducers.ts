@@ -26,3 +26,10 @@ const frequentTagsFeauture = createFeature({
     }))
   ),
 });
+export const {
+  name: frequentTagsFeatureKey,
+  reducer: frequentTagsReducer,
+  selectIsLoading,
+  selectError,
+  selectData: selectFrequentTagsData,
+} = frequentTagsFeauture;

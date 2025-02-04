@@ -29,10 +29,3 @@ export const getFrequentTagsEffect = createEffect(
   },
   { functional: true }
 );
-export const {
-  name: frequentTagsFeatureKey,
-  reducer: frequentTagsReducer,
-  selectLoading,
-  selectError,
-  selectData: selectFrequentTagsData,
-} = frequentTagsFeature;

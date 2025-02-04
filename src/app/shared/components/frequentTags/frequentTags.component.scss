@@ -1,0 +1,19 @@
+/* filepath: /c:/Users/hamza/coding/Scribz/src/app/shared/components/frequentTags/frequentTags.component.scss */
+.sidebar {
+  margin: 20px 0;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-chip {
+  background-color: #e0e0e0;
+  color: #424242;
+  border: 1px solid #bdbdbd;
+  border-radius: 16px;
+  padding: 4px 8px;
+  font-size: 14px;
+}

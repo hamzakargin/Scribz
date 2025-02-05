@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { flowActions } from './store/actions';
 import { Store } from '@ngrx/store';
@@ -45,7 +45,7 @@ import { TagListComponent } from '../tag-list/tag-list.component';
   templateUrl: './flow.component.html',
   styleUrl: './flow.component.scss',
 })
-export class FlowComponent implements OnInit {
+export class FlowComponent implements OnInit, OnChanges {
   @Input() apiUrl: string = '';
   data$!: Observable<{ isLoading: boolean; error: any; flow: any }>;
   currentPage: number = 0;
@@ -70,13 +70,21 @@ export class FlowComponent implements OnInit {
       this.fetchFlow();
     });
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    const apiUrlChanged =
+      !changes['apiUrl'].firstChange &&
+      changes['apiUrl'].currentValue !== changes['apiUrl'].previousValue;
+    if (apiUrlChanged) {
+      this.fetchFlow();
+    }
+  }
 
   fetchFlow(): void {
-    const offsett = this.currentPage * this.limit - this.limit;
+    const offset = this.currentPage * this.limit - this.limit;
     const parsedUrl = queryString.parseUrl(this.apiUrl);
     const stringifiedParams = queryString.stringify({
       limit: this.limit,
-      offset: offsett,
+      offset: offset,
       ...parsedUrl.query,
     });
     const apiUrlsWithParams = `${parsedUrl.url}?${stringifiedParams}`;

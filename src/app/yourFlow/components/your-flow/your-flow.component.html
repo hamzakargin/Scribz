@@ -1,0 +1,26 @@
+<div class="home-page mat-elevation-z8">
+  <div class="banner-container">
+    <app-banner></app-banner>
+  </div>
+  <div class="container-page mat-elevation-z4">
+    <div class="row">
+      <div class="col-md-9">
+        <mat-card class="flow-togglers-card">
+          <mat-card-title>
+            <app-flow-toggler></app-flow-toggler>
+          </mat-card-title>
+          <mat-card-content>
+            <app-flow [apiUrl]="apiUrl"></app-flow>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="col-md-3">
+        <mat-card class="popular-tags-card">
+          <mat-card-title>
+            <app-frequent-tags></app-frequent-tags>
+          </mat-card-title>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

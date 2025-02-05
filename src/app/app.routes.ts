@@ -15,4 +15,14 @@ export const appRoutes: Route[] = [
     loadChildren: () =>
       import('./publicFlow/publicFlow.routes').then((m) => m.routes),
   },
+  {
+    path: 'flow',
+    loadChildren: () =>
+      import('./yourFlow/yourFlow.routes').then((m) => m.routes),
+  },
+  {
+    path: 'tags/:slug',
+    loadChildren: () =>
+      import('./tagFlow/tagFlow.routes').then((m) => m.routes),
+  },
 ];

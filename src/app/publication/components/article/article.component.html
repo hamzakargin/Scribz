@@ -1,1 +1,42 @@
-<p>article works!</p>
+<ng-container *ngIf="data$ | async as data">
+  <mat-card class="article-page">
+    <mat-card class="banner">
+      <div class="container" *ngIf="data.article">
+        <h1>{{ data.article.title }}</h1>
+        <div class="article-meta">
+          <a [routerLink]="['/profiles', data.article.author.username]">
+            <img [src]="data.article.author.image" alt="Author image" />
+          </a>
+          <div class="info">
+            <a [routerLink]="['/profiles', data.article.author.username]">
+              {{ data.article.author.username }}
+            </a>
+            <span class="date">{{ data.article.createdAt }}</span>
+          </div>
+          <span *ngIf="data.isAuthor">
+            <a
+              [routerLink]="['/articles', data.article.slug, 'edit']"
+              mat-button
+              color="primary"
+            >
+              <mat-icon>edit</mat-icon> Edit Article
+            </a>
+            <button mat-button color="warn">
+              <mat-icon>delete</mat-icon> Delete Article
+            </button>
+          </span>
+        </div>
+      </div>
+    </mat-card>
+
+    <div class="container page">
+      <app-loading *ngIf="data.isLoading"></app-loading>
+      <app-error-message *ngIf="data.error"></app-error-message>
+
+      <mat-card class="article-content" *ngIf="data.article">
+        <p>{{ data.article.body }}</p>
+        <app-tag-list [tags]="data.article.tagList"></app-tag-list>
+      </mat-card>
+    </div>
+  </mat-card>
+</ng-container>

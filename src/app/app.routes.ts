@@ -26,6 +26,11 @@ export const appRoutes: Route[] = [
       import('./tagFlow/tagFlow.routes').then((m) => m.routes),
   },
   {
+    path: 'article/new',
+    loadChildren: () =>
+      import('./createPost/createArticle.routes').then((m) => m.routes),
+  },
+  {
     path: 'article/:slug',
     loadChildren: () =>
       import('./publication/article.routes').then((m) => m.routes),

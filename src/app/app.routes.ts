@@ -1,4 +1,4 @@
-import { Route } from '@angular/router';
+import {Route} from '@angular/router';
 
 export const appRoutes: Route[] = [
   {
@@ -39,5 +39,10 @@ export const appRoutes: Route[] = [
     path: 'article/:slug/edit',
     loadChildren: () =>
       import('./editPost/editArticle.routes').then((m) => m.routes),
+  },
+  {
+    path: 'settings',
+    loadChildren: () =>
+      import('./settings/settings.routes').then((m) => m.routes),
   },
 ];

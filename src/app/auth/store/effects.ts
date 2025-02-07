@@ -1,13 +1,13 @@
-import { inject } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { switchMap, map, of, catchError, tap } from 'rxjs';
+import {inject} from '@angular/core';
+import {Actions, createEffect, ofType} from '@ngrx/effects';
+import {catchError, map, of, switchMap, tap} from 'rxjs';
 
-import { AuthService } from '../services/auth.service';
-import { authActions } from './action';
-import { CurrentUserInterface } from '../../shared/types/currentUser.interface';
-import { HttpErrorResponse } from '@angular/common/http';
-import { PersistanceService } from '../../shared/services/persistance.service';
-import { Router } from '@angular/router';
+import {AuthService} from '../services/auth.service';
+import {authActions} from './action';
+import {CurrentUserInterface} from '../../shared/types/currentUser.interface';
+import {HttpErrorResponse} from '@angular/common/http';
+import {PersistanceService} from '../../shared/services/persistance.service';
+import {Router} from '@angular/router';
 
 export const getCurrentUserEffect = createEffect(
   (
@@ -24,7 +24,7 @@ export const getCurrentUserEffect = createEffect(
         }
         return authService.getCurrentUser().pipe(
           map((currentUser: CurrentUserInterface) => {
-            return authActions.getCurrentUserSuccess({ currentUser });
+            return authActions.getCurrentUserSuccess({currentUser});
           }),
           catchError(() => {
             return of(authActions.getCurrentUserFailure());
@@ -33,7 +33,7 @@ export const getCurrentUserEffect = createEffect(
       })
     );
   },
-  { functional: true }
+  {functional: true}
 );
 
 export const registerEffect = createEffect(
@@ -44,11 +44,11 @@ export const registerEffect = createEffect(
   ) => {
     return actions$.pipe(
       ofType(authActions.register),
-      switchMap(({ request }) => {
+      switchMap(({request}) => {
         return authService.register(request).pipe(
           map((currentUser: CurrentUserInterface) => {
             persistanceService.set('accessToken', currentUser.token);
-            return authActions.registerSuccess({ currentUser });
+            return authActions.registerSuccess({currentUser});
           }),
           catchError((errorResponse: HttpErrorResponse) => {
             return of(
@@ -61,7 +61,7 @@ export const registerEffect = createEffect(
       })
     );
   },
-  { functional: true }
+  {functional: true}
 );
 export const redirectAfterRegisterEffect = createEffect(
   (actions$ = inject(Actions), router = inject(Router)) => {
@@ -72,7 +72,7 @@ export const redirectAfterRegisterEffect = createEffect(
       })
     );
   },
-  { functional: true, dispatch: false }
+  {functional: true, dispatch: false}
 );
 
 export const loginEffect = createEffect(
@@ -83,11 +83,11 @@ export const loginEffect = createEffect(
   ) => {
     return actions$.pipe(
       ofType(authActions.login),
-      switchMap(({ request }) => {
+      switchMap(({request}) => {
         return authService.login(request).pipe(
           map((currentUser: CurrentUserInterface) => {
             persistanceService.set('accessToken', currentUser.token);
-            return authActions.loginSuccess({ currentUser });
+            return authActions.loginSuccess({currentUser});
           }),
           catchError((errorResponse: HttpErrorResponse) => {
             return of(
@@ -100,7 +100,7 @@ export const loginEffect = createEffect(
       })
     );
   },
-  { functional: true }
+  {functional: true}
 );
 export const redirectAfterLoginEffect = createEffect(
   (actions$ = inject(Actions), router = inject(Router)) => {
@@ -111,5 +111,27 @@ export const redirectAfterLoginEffect = createEffect(
       })
     );
   },
-  { functional: true, dispatch: false }
+  {functional: true, dispatch: false}
 );
+export const updateCurrentUserEffect = createEffect(
+  (
+    actions$ = inject(Actions),
+    authService = inject(AuthService),
+  ) => {
+    return actions$.pipe(
+      ofType(authActions.updateCurrentUser),
+      switchMap(({currentUserRequest}) => {
+        return authService.updateCurrentUser(currentUserRequest).pipe(
+          map((currentUser: CurrentUserInterface) => {
+            return authActions.updateCurrentUserSuccess({currentUser});
+          }),
+          catchError((errorResponse: HttpErrorResponse) => {
+            return of(authActions.updateCurrentUserFailure({errors: errorResponse.error.errors}));
+          })
+        );
+      })
+    );
+  },
+  {functional: true}
+);
+

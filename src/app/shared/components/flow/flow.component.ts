@@ -1,32 +1,25 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { flowActions } from './store/actions';
-import { Store } from '@ngrx/store';
-import { combineLatest } from 'rxjs';
-import { selectError, selectFlowData, selectIsLoading } from './store/reducers';
-import { Observable } from 'rxjs';
-import { CommonModule } from '@angular/common';
-import {
-  ActivatedRoute,
-  Params,
-  Route,
-  Router,
-  RouterLink,
-} from '@angular/router';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {flowActions} from './store/actions';
+import {Store} from '@ngrx/store';
+import {combineLatest, Observable} from 'rxjs';
+import {selectError, selectFlowData, selectIsLoading} from './store/reducers';
+import {CommonModule} from '@angular/common';
+import {ActivatedRoute, Params, Router, RouterLink,} from '@angular/router';
 
-import { MatCardModule } from '@angular/material/card';
+import {MatCardModule} from '@angular/material/card';
 
-import { MatButtonModule } from '@angular/material/button';
+import {MatButtonModule} from '@angular/material/button';
 
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
-import { MatIconModule } from '@angular/material/icon';
-import { ErrorMessageComponent } from '../error-message/error-message.component';
-import { LoadingComponent } from '../loading/loading.component';
-import { PaginationComponent } from '../pagination/pagination.component';
-import { environment } from '../../../../environments/environment.development';
+import {MatIconModule} from '@angular/material/icon';
+import {ErrorMessageComponent} from '../error-message/error-message.component';
+import {LoadingComponent} from '../loading/loading.component';
+import {PaginationComponent} from '../pagination/pagination.component';
+import {environment} from '../../../../environments/environment.development';
 import queryString from 'query-string';
-import { TagListComponent } from '../tag-list/tag-list.component';
+import {TagListComponent} from '../tag-list/tag-list.component';
+import {AddToFavoritesComponent} from '../add-to-favorites/add-to-favorites.component';
 
 @Component({
   selector: 'app-flow',
@@ -41,6 +34,7 @@ import { TagListComponent } from '../tag-list/tag-list.component';
     LoadingComponent,
     PaginationComponent,
     TagListComponent,
+    AddToFavoritesComponent,
   ],
   templateUrl: './flow.component.html',
   styleUrl: './flow.component.scss',
@@ -56,7 +50,9 @@ export class FlowComponent implements OnInit, OnChanges {
     private store: Store,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+  }
+
   ngOnInit(): void {
     this.data$ = combineLatest({
       isLoading: this.store.select(selectIsLoading),
@@ -70,6 +66,7 @@ export class FlowComponent implements OnInit, OnChanges {
       this.fetchFlow();
     });
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     const apiUrlChanged =
       !changes['apiUrl'].firstChange &&
@@ -88,6 +85,6 @@ export class FlowComponent implements OnInit, OnChanges {
       ...parsedUrl.query,
     });
     const apiUrlsWithParams = `${parsedUrl.url}?${stringifiedParams}`;
-    this.store.dispatch(flowActions.getFlow({ url: apiUrlsWithParams }));
+    this.store.dispatch(flowActions.getFlow({url: apiUrlsWithParams}));
   }
 }

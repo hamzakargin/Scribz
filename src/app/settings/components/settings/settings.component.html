@@ -1,0 +1,55 @@
+<ng-container *ngIf="data$ | async as data">
+  <div class="settings-container">
+    <mat-card class="settings-card">
+      <h2>Settings</h2>
+
+      <app-backend-error-messages *ngIf="data.backendErrors"
+                                  [backendErrors]="data.backendErrors"></app-backend-error-messages>
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <!-- Profile Image -->
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>Profile Picture URL</mat-label>
+          <input matInput type="text" formControlName="image" placeholder="Enter image URL"/>
+        </mat-form-field>
+
+        <!-- Username -->
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput type="text" formControlName="username" placeholder="Enter username"/>
+        </mat-form-field>
+
+        <!-- Bio -->
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>Bio</mat-label>
+          <textarea matInput rows="3" formControlName="bio" placeholder="Tell something about yourself"></textarea>
+        </mat-form-field>
+
+        <!-- Email -->
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" placeholder="Enter email"/>
+        </mat-form-field>
+
+        <!-- Password -->
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>New Password</mat-label>
+          <input matInput type="password" formControlName="password" placeholder="Enter new password"/>
+        </mat-form-field>
+
+        <!-- Submit Button -->
+        <button mat-raised-button color="primary" class="form-field" type="submit"
+                [disabled]="form.invalid || data.isSubmitting">
+          Update Settings
+        </button>
+      </form>
+
+      <hr/>
+
+      <!-- Logout Button -->
+      <button mat-stroked-button color="warn" class="form-field" (click)="logout()">
+        Logout
+      </button>
+    </mat-card>
+  </div>
+</ng-container>

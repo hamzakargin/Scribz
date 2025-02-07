@@ -22,7 +22,12 @@
           <app-tag-list [tags]="article.tagList"></app-tag-list>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button>Add Favorites</button>
+          <div>
+            <app-add-to-favorites
+              [isFavorited]="article.favorited"
+              [articleSlug]="article.slug"
+              [favoritesCount]="article.favoritesCount"></app-add-to-favorites>
+          </div>
         </mat-card-actions>
       </mat-card>
     </div>

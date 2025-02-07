@@ -1,0 +1,13 @@
+<button
+  mat-icon-button
+  (click)="handleLike()"
+  [ngClass]="{
+    'btn-sm': true,
+    'btn-primary': isFavorited,
+    'btn-outline-primary': !isFavorited
+  }"
+  class="like-button"
+>
+  <mat-icon>{{ isFavorited ? 'favorite' : 'favorite_border' }}</mat-icon>
+  <span>&nbsp; {{ favoritesCount }}</span>
+</button>

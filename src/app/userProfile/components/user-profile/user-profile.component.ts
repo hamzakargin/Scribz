@@ -1,51 +1,72 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
-import {select, Store} from '@ngrx/store';
-import {userProfileActions} from '../../store/actions';
-import {combineLatest, filter, Observable} from 'rxjs';
-import {UserProfileInterface} from '../../types/userProfile.interface';
+import {CommonModule} from '@angular/common'
+import {Component, computed, inject, OnInit} from '@angular/core'
+import {ActivatedRoute, Params, Router,} from '@angular/router'
+import {select, Store} from '@ngrx/store'
+import {combineLatest, filter, map} from 'rxjs'
 
-import {selectError, selectIsLoading, selectUserProfileData} from '../../store/reducers';
-import {CurrentUserInterface} from '../../../shared/types/currentUser.interface';
+
+import {userProfileActions} from '../../store/actions'
+import {selectError, selectIsLoading, selectUserProfileData,} from '../../store/reducers'
+import {UserProfileInterface} from '../../types/userProfile.interface'
 import {selectCurrentUser} from '../../../auth/store/reducer';
+import {CurrentUserInterface} from '../../../shared/types/currentUser.interface';
 
 @Component({
-  selector: 'app-user-profile',
-  imports: [],
-  templateUrl: './user-profile.component.html',
-  styleUrl: './user-profile.component.scss'
+  selector: 'mc-user-profile',
+  templateUrl: './userProfile.component.html',
+  standalone: true,
+  imports: [CommonModule],
 })
 export class UserProfileComponent implements OnInit {
+  route = inject(ActivatedRoute)
+  store = inject(Store)
+  router = inject(Router)
   slug: string = ''
   isCurrentUserProfile$ = combineLatest({
     currentUser: this.store.pipe(
       select(selectCurrentUser),
-      filter((currentUser): currentUser is CurrentUserInterface => Boolean(currentUser))
-    )
+      filter((currentUser): currentUser is CurrentUserInterface =>
+        Boolean(currentUser)
+      )
+    ),
     userProfile: this.store.pipe(
       select(selectUserProfileData),
-      filter((userProfile): userProfile is UserProfileInterface => Boolean(userProfile))
-    )
+      filter((userProfile): userProfile is UserProfileInterface =>
+        Boolean(userProfile)
+      )
+    ),
+  }).pipe(
+    map(({currentUser, userProfile}) => {
+      return currentUser.username === userProfile.username
+    })
+  )
+  data$ = combineLatest({
+    isLoading: this.store.select(selectIsLoading),
+    error: this.store.select(selectError),
+    userProfile: this.store.select(selectUserProfileData),
+    isCurrentUserProfile: this.isCurrentUserProfile$,
   })
-  data$!: Observable<{ isLoading: boolean; error: string | null; userProfile: UserProfileInterface | null; }>
 
-  constructor(private route: ActivatedRoute, private store: Store) {
-  }
+  isLoading = this.store.selectSignal(selectIsLoading)
+  foo = computed(() => (this.isLoading() ? 'true' : 'false'))
 
-  ngOnInit() {
+
+  ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.slug = params['slug'];
+      this.slug = params['slug']
       this.fetchUserProfile()
-
-    })
-    this.data$ = combineLatest({
-      isLoading: this.store.select(selectIsLoading),
-      error: this.store.select(selectError),
-      userProfile: this.store.select(selectUserProfileData)
     })
   }
 
-  fetchUserProfile() {
+  fetchUserProfile(): void {
     this.store.dispatch(userProfileActions.getUserProfile({slug: this.slug}))
   }
+
+  getApiUrl(): string {
+    const isFavorites = this.router.url.includes('favorites')
+    return isFavorites
+      ? `/articles?favorited=${this.slug}`
+      : `/articles?author=${this.slug}`
+  }
 }
+

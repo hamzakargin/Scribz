@@ -16,7 +16,7 @@ export const appRoutes: Route[] = [
       import('./publicFlow/publicFlow.routes').then((m) => m.routes),
   },
   {
-    path: 'flow',
+    path: 'feed',
     loadChildren: () =>
       import('./yourFlow/yourFlow.routes').then((m) => m.routes),
   },

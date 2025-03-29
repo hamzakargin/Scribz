@@ -16,7 +16,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {ErrorMessageComponent} from '../error-message/error-message.component';
 import {LoadingComponent} from '../loading/loading.component';
 import {PaginationComponent} from '../pagination/pagination.component';
-import {environment} from '../../../../environments/environment.development';
+import {environment} from '../../../../environments/environment.prod';
 import queryString from 'query-string';
 import {TagListComponent} from '../tag-list/tag-list.component';
 import {AddToFavoritesComponent} from '../add-to-favorites/add-to-favorites.component';

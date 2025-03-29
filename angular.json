@@ -15,7 +15,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@ngx-env/builder:browser",
+          "builder": "@ngx-env/builder:application",
           "options": {
             "outputPath": "dist/scribz/browser",
             "index": "src/index.html",

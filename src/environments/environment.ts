@@ -4,3 +4,4 @@ export const environment = {
 };
 
 //appconfig ts types eklendi
+//build alindi
